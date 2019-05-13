@@ -1,4 +1,6 @@
-#SYNOPSIS
+# Start-RobustCloudCommand
+
+## SYNOPSIS
 Generic wrapper script that tries to ensure that a script block successfully finishes execution in O365 against a large object count.
 
 Works well with intense operations that may cause throttling
@@ -11,9 +13,6 @@ It accomplishes this by doing the following:
 * Restarts the session every X number seconds to ensure a valid connection.
 * Attempts to work past session related errors and will skip objects that it can't process.
 * Attempts to calculate throttle exhaustion and sleep a sufficient time to allow throttle recovery
-
-## PARAMETER Agree
-Verifies that you have read and agree to the disclaimer at the top of the script file.
 
 ## PARAMETER AutomaticThrottle
 Calculated value based on your tenants powershell recharge rate.
@@ -42,7 +41,7 @@ Location and file name for the log file.
 
 ## PARAMETER ManualThrottle
 Manual delay of X number of milliseconds to sleep between each cmdlets call.
-Should only be used if the AutomaticThrottle isn't working to introduce sufficent delay to prevent Micro Delays
+Should only be used if the AutomaticThrottle isn't working to introduce sufficient delay to prevent Micro Delays
 
 ## PARAMETER NonInteractive
 Suppresses output to the screen.  All output will still be in the log file.
@@ -67,22 +66,25 @@ Creates the log file specified in -logfile.  Log file contains a record of all a
 
 ## EXAMPLE
 invoke-command -scriptblock {Get-mailbox -resultsize unlimited | select-object -property Displayname,PrimarySMTPAddress,Identity} -session (get-pssession) | export-csv c:\temp\mbx.csv
+
 $mbx = import-csv c:\temp\mbx.csv
+
 $cred = get-Credential
-.\Start-RobustCloudCommand.ps1 -Agree -Credential $cred -recipients $mbx -logfile C:\temp\out.log -ScriptBlock {Set-Clutter -identity $input.PrimarySMTPAddress.tostring() -enable:$false}
+
+.\Start-RobustCloudCommand.ps1 -Credential $cred -recipients $mbx -logfile C:\temp\out.log -ScriptBlock {Set-Clutter -identity $input.PrimarySMTPAddress.tostring() -enable:$false}
 
 Gets all mailboxes from the service returning only Displayname,Identity, and PrimarySMTPAddress.  Exports the results to a CSV
 Imports the CSV into a variable
 Gets your O365 Credential
-Executes the script setting clutter to off
+Executes the script setting clutter to off using Legacy Credentials
 
 ## EXAMPLE
 invoke-command -scriptblock {Get-mailbox -resultsize unlimited | select-object -property Displayname,PrimarySMTPAddress,Identity} -session (get-pssession) | export-csv c:\temp\recipients.csv
+
 $recipients = import-csv c:\temp\recipients.csv
-$cred = Get-Credential
-.\Start-RobustCloudCommand.ps1 -Agree -Credential $cred -recipients $recipients -logfile C:\temp\out.log -ScriptBlock {Get-MobileDeviceStatistics -mailbox $input.PrimarySMTPAddress.tostring() | Select-Object -Property @{Name = "PrimarySMTPAddress";Expression={$input.PrimarySMTPAddress.tostring()}},DeviceType,LastSuccessSync,FirstSyncTime | Export-Csv c:\temp\stats.csv -Append }
+
+Start-RobustCloudCommand -recipients $recipients -logfile C:\temp\out.log -ScriptBlock {Get-MobileDeviceStatistics -mailbox $input.PrimarySMTPAddress.tostring() | Select-Object -Property @{Name = "PrimarySMTPAddress";Expression={$input.PrimarySMTPAddress.tostring()}},DeviceType,LastSuccessSync,FirstSyncTime | Export-Csv c:\temp\stats.csv -Append }
 
 Gets All Recipients and exports them to a CSV (for restart ability)
 Imports the CSV into a variable
-Gets your O365 Credentials
-Executes the script to gather EAS Device statistics and output them to a csv file
+Executes the script to gather EAS Device statistics and output them to a csv file using ADAL with support for MFA

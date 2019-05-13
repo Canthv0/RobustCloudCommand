@@ -12,7 +12,7 @@
 RootModule = '.\RobustCloudCommand.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0'
+ModuleVersion = '1.1.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -30,10 +30,13 @@ CompanyName = 'Matthew Byrd'
 Copyright = '(c) 2019 matbyrd@microsoft.com All rights reserved.'
 
 # Description of the functionality provided by this module
-# Description = ''
+Description = '
+Generic wrapper script that tries to ensure that a script block successfully finishes execution in O365 against a large object count.
+
+Works well with intense operations that may cause throttling'
 
 # Minimum version of the Windows PowerShell engine required by this module
-# PowerShellVersion = ''
+PowerShellVersion = '5.0'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -51,7 +54,7 @@ Copyright = '(c) 2019 matbyrd@microsoft.com All rights reserved.'
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-RequiredModules = @(@{ModuleName = "CloudConnect"; ModuleVersion = '0.6.0';});
+RequiredModules = @(@{ModuleName = 'CloudConnect'; ModuleVersion = '0.6.0'; })
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
@@ -108,6 +111,10 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+        1.1.0 - Updated version number format
+        1.1.0 - Removed -agree switch and all related documentation
+        1.1.0 - Corrected Examples in the Help
+        1.1.0 - Requires PowerShell V5.0
         1.0.0 - Initial Working release
         '
 
