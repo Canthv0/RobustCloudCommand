@@ -98,7 +98,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = @('O365','Exchange','Online','Batch','Bulck','Throttle','Robust')
+        Tags = @('O365','Exchange','Online','Batch','Bulk','Throttle','Robust')
 
         # A URL to the license for this module.
         LicenseUri = 'https://github.com/Canthv0/RobustCloudCommand/blob/master/LICENSE'
