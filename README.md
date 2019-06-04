@@ -1,5 +1,11 @@
 # Start-RobustCloudCommand
 
+## INSTALL
+Start-RobustCloudCommand is published to the PowershellGallery and should be installed from there.
+https://www.powershellgallery.com/packages/RobustCloudCommand
+
+Install-Module -Name RobustCloudCommand
+
 ## SYNOPSIS
 Generic wrapper script that tries to ensure that a script block successfully finishes execution in O365 against a large object count.
 
@@ -60,6 +66,7 @@ and can be accessed with $input as if you were pipelining the object.
 
 ## LINK
 https://github.com/Canthv0/RobustCloudCommand
+https://www.powershellgallery.com/packages/RobustCloudCommand
 
 ## OUTPUTS
 Creates the log file specified in -logfile.  Log file contains a record of all actions taken by the script.

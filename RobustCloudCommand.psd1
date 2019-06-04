@@ -12,7 +12,7 @@
 RootModule = '.\RobustCloudCommand.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.1.0'
+ModuleVersion = '1.1.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -110,7 +110,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '
+        ReleaseNotes = '1.1.1 - Updated ReadMe
         1.1.0 - Updated version number format
         1.1.0 - Removed -agree switch and all related documentation
         1.1.0 - Corrected Examples in the Help
