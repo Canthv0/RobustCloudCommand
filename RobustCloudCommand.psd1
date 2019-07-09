@@ -12,7 +12,7 @@
 RootModule = '.\RobustCloudCommand.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.1.2'
+ModuleVersion = '1.1.3'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -54,7 +54,7 @@ PowerShellVersion = '5.0'
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-RequiredModules = @(@{ModuleName = 'CloudConnect'; ModuleVersion = '0.6.0'; })
+RequiredModules = @(@{ModuleName = 'CloudConnect'; ModuleVersion = '1.1.2'; })
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
@@ -110,7 +110,9 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '1.1.2 - Fixed issue with showing progress after 100 objects
+        ReleaseNotes = '
+        1.1.3 - Updated minimum version of cloudconnect needed to correct some connection issues
+        1.1.2 - Fixed issue with showing progress after 100 objects
         1.1.1 - Updated ReadMe
         1.1.0 - Updated version number format
         1.1.0 - Removed -agree switch and all related documentation
