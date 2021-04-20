@@ -33,7 +33,7 @@ It accomplishes this by doing the following:
 Switch | Description|Default
 -------|-------|-------
 AutomaticThrottle|Value used to calculate time needed for throttle recovery|0.25
-IdentifyingProperty|Property on recipient objects to identity the object in the log|"DisplayName","Name","Identity","PrimarySMTPAddress","Alias","GUID"
+IdentifyingProperty|Property on recipient objects to identity the object in the log|"DisplayName","Name","Identity",<br>"PrimarySMTPAddress","Alias","GUID"
 LogFile|Location and name of logfile|NA
 ManualThrottle|Set number of seconds to delay between loops|None
 NonInteractive|Suppresses screen output|False
