@@ -1,17 +1,25 @@
 # Start-RobustCloudCommand
 
-## INSTALL
+## Recommended Install
 Start-RobustCloudCommand is published to the PowershellGallery and should be installed from there.
 https://www.powershellgallery.com/packages/RobustCloudCommand
 
 Install-Module -Name RobustCloudCommand
 
-## SYNOPSIS
+## Manual Install
+If the client doesn't have access to the internet directly then:
+
+* Download the module from https://github.com/Canthv0/RobustCloudCommand/releases
+  * Extract the Zip file to a known location
+  * From powershell in the extracted path run `Import-Module robustcloudcommand.psd1`
+  * Change to a different directory than the one with the psd1 file
+
+## Synopsis
 Generic wrapper script that tries to ensure that a script block successfully finishes execution in O365 against a large object count.
 
 Works well with intense operations that may cause throttling
 
-## DESCRIPTION
+## Description
 Wrapper script that tries to ensure that a script block successfully finishes execution in O365 against a large object count.
 
 It accomplishes this by doing the following:
@@ -20,58 +28,25 @@ It accomplishes this by doing the following:
 * Attempts to work past session related errors and will skip objects that it can't process.
 * Attempts to calculate throttle exhaustion and sleep a sufficient time to allow throttle recovery
 
-## PARAMETER AutomaticThrottle
-Calculated value based on your tenants powershell recharge rate.
-You tenant recharge rate can be calculated using a Micro Delay Warning message.
+## Cmdlet Options
 
-Look for the following line in your Micro Delay Warning Message
-Balance: -1608289/2160000/-3000000 
+Switch | Description|Default
+-------|-------|-------
+AutomaticThrottle|Value used to calculate time needed for throttle recovery|0.25
+IdentifyingProperty|Property on recipient objects to identity the object in the log|"DisplayName","Name","Identity","PrimarySMTPAddress","Alias","GUID"
+LogFile|Location and name of logfile|NA
+ManualThrottle|Set number of seconds to delay between loops|None
+NonInteractive|Suppresses screen output|False
+Recipients|Collection of Objects to operate on|NA
+ResetSeconds|Number of seconds between session rebuild|870
+ScriptBlock|Operation to run on provided objects|NA
+UserPrincipalName|UPN of the user that will be connecting to Exchange online.|NA
 
-The middle value is the recharge rate.
-Divide this value by the number of milliseconds in an hour (3600000)
-And subtract the result from 1 to get your AutomaticThrottle value
+## Outputs
+Creates the log file specified in -logfile.
+Contains a record of all actions taken by the script.
 
-1 - (2160000 / 3600000) = 0.4
-
-Default Value is .25
-
-## PARAMETER IdentifyingProperty
-What property of the objects we are processing that will be used to identify them in the log file and host
-If the value is not set by the user the script will attempt to determine if one of the following properties is present
-"DisplayName","Name","Identity","PrimarySMTPAddress","Alias","GUID"
-
-If the value is not set and we are not able to match a well known property the script will generate an error and terminate.
-
-## PARAMETER LogFile
-Location and file name for the log file.
-
-## PARAMETER ManualThrottle
-Manual delay of X number of milliseconds to sleep between each cmdlets call.
-Should only be used if the AutomaticThrottle isn't working to introduce sufficient delay to prevent Micro Delays
-
-## PARAMETER NonInteractive
-Suppresses output to the screen.  All output will still be in the log file.
-
-## PARAMETER Recipients
-Array of objects to operate on. This can be mailboxes or any other set of objects.
-Input must be an array!
-Anything coming in from the array can be accessed in the script block using $input.property
-
-## PARAMETER ResetSeconds
-How many seconds to run the script block before we rebuild the session with O365.
-
-## PARAMETER ScriptBlock
-The script that you want to robustly execute against the array of objects.  The Recipient objects will be provided to the cmdlets in the script block
-and can be accessed with $input as if you were pipelining the object.
-
-## LINK
-https://github.com/Canthv0/RobustCloudCommand
-https://www.powershellgallery.com/packages/RobustCloudCommand
-
-## OUTPUTS
-Creates the log file specified in -logfile.  Log file contains a record of all actions taken by the script.
-
-## EXAMPLE
+## Examples
 invoke-command -scriptblock {Get-mailbox -resultsize unlimited | select-object -property Displayname,PrimarySMTPAddress,Identity} -session (get-pssession) | export-csv c:\temp\mbx.csv
 
 $mbx = import-csv c:\temp\mbx.csv
