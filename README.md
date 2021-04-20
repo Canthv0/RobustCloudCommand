@@ -46,26 +46,26 @@ UserPrincipalName|UPN of the user that will be connecting to Exchange online.|NA
 Creates the log file specified in -logfile.
 Contains a record of all actions taken by the script.
 
-## Examples
-invoke-command -scriptblock {Get-mailbox -resultsize unlimited | select-object -property Displayname,PrimarySMTPAddress,Identity} -session (get-pssession) | export-csv c:\temp\mbx.csv
+## Example 1
+`invoke-command -scriptblock {Get-mailbox -resultsize unlimited | select-object -property Displayname,PrimarySMTPAddress,Identity} -session (get-pssession) | export-csv c:\temp\mbx.csv`
 
-$mbx = import-csv c:\temp\mbx.csv
+`$mbx = import-csv c:\temp\mbx.csv`
 
-$cred = get-Credential
+`$cred = get-Credential`
 
-.\Start-RobustCloudCommand.ps1 -Credential $cred -recipients $mbx -logfile C:\temp\out.log -ScriptBlock {Set-Clutter -identity $input.PrimarySMTPAddress.tostring() -enable:$false}
+`.\Start-RobustCloudCommand.ps1 -Credential $cred -recipients $mbx -logfile C:\temp\out.log -ScriptBlock {Set-Clutter -identity $input.PrimarySMTPAddress.tostring() -enable:$false}`
 
 Gets all mailboxes from the service returning only Displayname,Identity, and PrimarySMTPAddress.  Exports the results to a CSV
 Imports the CSV into a variable
 Gets your O365 Credential
 Executes the script setting clutter to off using Legacy Credentials
 
-## EXAMPLE
-invoke-command -scriptblock {Get-mailbox -resultsize unlimited | select-object -property Displayname,PrimarySMTPAddress,Identity} -session (get-pssession) | export-csv c:\temp\recipients.csv
+## Example 2
+`invoke-command -scriptblock {Get-mailbox -resultsize unlimited | select-object -property Displayname,PrimarySMTPAddress,Identity} -session (get-pssession) | export-csv c:\temp\recipients.csv`
 
-$recipients = import-csv c:\temp\recipients.csv
+`$recipients = import-csv c:\temp\recipients.csv`
 
-Start-RobustCloudCommand -recipients $recipients -logfile C:\temp\out.log -ScriptBlock {Get-MobileDeviceStatistics -mailbox $input.PrimarySMTPAddress.tostring() | Select-Object -Property @{Name = "PrimarySMTPAddress";Expression={$input.PrimarySMTPAddress.tostring()}},DeviceType,LastSuccessSync,FirstSyncTime | Export-Csv c:\temp\stats.csv -Append }
+`Start-RobustCloudCommand -recipients $recipients -logfile C:\temp\out.log -ScriptBlock {Get-MobileDeviceStatistics -mailbox $input.PrimarySMTPAddress.tostring() | Select-Object -Property @{Name = "PrimarySMTPAddress";Expression={$input.PrimarySMTPAddress.tostring()}},DeviceType,LastSuccessSync,FirstSyncTime | Export-Csv c:\temp\stats.csv -Append }`
 
 Gets All Recipients and exports them to a CSV (for restart ability)
 Imports the CSV into a variable
