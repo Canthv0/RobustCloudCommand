@@ -12,7 +12,7 @@
 RootModule = '.\RobustCloudCommand.psm1'
 
 # Version number of this module.
-ModuleVersion = '2.0.0'
+ModuleVersion = '2.0.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -111,6 +111,7 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+        2.0.1 - Corrected and issue with -showbanner in connect-exchnageonline not being properly interprted
         2.0.0 - Added new mandatory switch -UserPrincipalName
         2.0.0 - Added dependancy on ExchangeOnlineManagement module 2.0.4 and higher
         2.0.0 - Remove dependency on legacy module cloudconnect
